@@ -13,13 +13,12 @@
 (function(define) {
 	define( function() {
 
-		var defaultModuleRegex, defaultSpecRegex, defaultWireName, replaceIdsRegex, removeCommentsRx, specCache;
+		var defaultModuleRegex, defaultSpecRegex, defaultWireName, replaceIdsRegex, specCache;
 		// default dependency regex
 		defaultWireName = 'wire';
 		defaultModuleRegex = /(\.module|\.create|\$plugins\[\])$/;
 		defaultSpecRegex = /(\.wire|\.spec)$/;
 		replaceIdsRegex = /(define)\s*\(\s*(?:\s*["']([^"']*)["']\s*,)?(?:\s*\[([^\]]*)\]\s*,)?/;
-		removeCommentsRx = /\/\*[\s\S]*?\*\/|\/\/.*?[\n\r]/g;
 		specCache = {};
 
 		// Using special require.nodeRequire, something added by r.js.
@@ -197,7 +196,7 @@
 
 		function injectIds (moduleText, absId, moduleIds) {
 			// note: replaceIdsRegex removes commas, parens, and brackets
-			return moduleText.replace(removeCommentsRx, '').replace(replaceIdsRegex, function (m, def, mid, depIds) {
+			return moduleText.replace(replaceIdsRegex, function (m, def, mid, depIds) {
 
 				// merge deps, but not args since they're not referenced in module
 				if (depIds) {
